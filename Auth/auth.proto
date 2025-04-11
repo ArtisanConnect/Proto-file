@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "genproto/auth";
+
+service AuthService {
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc GetProfile (ProfileRequest) returns (ProfileResponse);
+  rpc EditProfile (EditProfileRequest) returns (EditProfileResponse);
+  rpc ChangeUserType (ChangeUserTypeRequest) returns (ChangeUserTypeResponse);
+  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse);
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+  rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse);
+  rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc Logout (LogoutRequest) returns (LogoutResponse);
+}
+
+message RegisterRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  string full_name = 4;
+  string user_type = 5;
+}
+
+message RegisterResponse {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string full_name = 4;
+  string user_type = 5;
+  string created_at = 6;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  int32 expires_in = 3;
+}
+
+message ProfileRequest {
+  string user_id = 1;
+}
+
+message ProfileResponse {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string full_name = 4;
+  string user_type = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message EditProfileRequest {
+  string user_id = 1;
+  string full_name = 2;
+  string bio = 3;
+}
+
+message EditProfileResponse {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string full_name = 4;
+  string bio = 5;
+  string user_type = 6;
+  string updated_at = 7;
+}
+
+message ChangeUserTypeRequest {
+  string user_id = 1;
+  string user_type = 2;
+}
+
+message ChangeUserTypeResponse {
+  string id = 1;
+  string username = 2;
+  string user_type = 3;
+  string updated_at = 4;
+}
+
+message ListUsersRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+message User {
+  string id = 1;
+  string username = 2;
+  string full_name = 3;
+  string user_type = 4;
+}
+
+message DeleteUserRequest {
+  string user_id = 1;
+}
+
+message DeleteUserResponse {
+  string message = 1;
+}
+
+message ResetPasswordRequest {
+  string email = 1;
+}
+
+message ResetPasswordResponse {
+  string message = 1;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  int32 expires_in = 3;
+}
+
+message LogoutRequest {
+  string user_id = 1;
+}
+
+message LogoutResponse {
+  string message = 1;
+}
